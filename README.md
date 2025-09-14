@@ -1,4 +1,5 @@
-Plant a Quote in a Day  (Live webiste : )
+Plant a Quote in a Day   (Live website : )
+
 "Even the dark room has a light where it comes from a presence of a human or a living thing!"
 
 About the Project
@@ -6,7 +7,8 @@ This is my very first solo project, a simple yet functional website designed to 
 
 I built this project to practice my core web development skills from scratch, focusing on the fundamentals of front-end development.
 
-Features
+Features:
+
 Mood-Based Content: The website dynamically generates a new quote and song link after the user selects their mood.
 
 Dynamic UI: Clicking the "Refresh" button provides a new quote and song without needing to change the mood selection.
@@ -15,7 +17,6 @@ Aesthetic Design: The clean, dark theme and professional UI offer a modern and p
 
 Responsive Layout: The design adapts to different screen sizes, making it usable on both desktop and mobile devices.
 
-Technologies Used
 HTML: For the basic structure and content of the webpage.
 
 CSS: For all the styling, including the dark theme, layout, and animations. I used CSS variables to make the color palette easily customizable.
