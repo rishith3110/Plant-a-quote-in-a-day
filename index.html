@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant a Quote in a Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00bcd4;
+            /* Cyan - bright and clean */
+            --secondary-color: #9e9e9e;
+            /* Light grey for subtle elements */
+            --background-color: #1a1a1a;
+            /* Dark background */
+            --card-background: #2c2c2c;
+            /* Slightly lighter dark for cards */
+            --text-light: #e0e0e0;
+            /* Light text on dark background */
+            --text-dark: #ffffff;
+            /* White for strong text/headings */
+            --border-color: #444444;
+            /* Darker border for definition */
+            --button-hover-color: #0097a7;
+            /* Darker cyan on hover */
+            --result-bg-color: #383838;
+            /* Background for result container */
+            --result-border-color: #555555;
+            /* Border for result container */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-color);
+            /* Black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-background);
+            /* Dark card background */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            /* Stronger shadow for depth */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 80%;
+            width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--primary-color);
+            /* Bright primary color for heading */
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            /* Light text on dark background */
+            line-height: 1.6;
+        }
+
+        b {
+            font-weight: 600;
+            color: var(--text-dark);
+            /* White for bold text */
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        label {
+            font-size: 1rem;
+            color: var(--text-light);
+            /* Light text for labels */
+            margin-top: 25px;
+            display: block;
+            font-weight: 500;
+        }
+
+        select {
+            font-size: 1rem;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border: 2px solid var(--border-color);
+            /* Darker border */
+            border-radius: 8px;
+            background-color: var(--card-background);
+            /* Dark background for select */
+            color: var(--text-light);
+            /* Light text in select */
+            width: 80%;
+            max-width: 300px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            /* Primary color on focus */
+        }
+
+        button {
+            background-color: var(--primary-color);
+            /* Bright primary color for buttons */
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 20px 5px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 188, 212, 0.3);
+            /* Shadow matching primary color */
+        }
+
+        button:hover {
+            background-color: var(--button-hover-color);
+            /* Darker cyan on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 188, 212, 0.4);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: var(--result-bg-color);
+            /* Darker background for results */
+            border: 1px solid var(--result-border-color);
+            /* Subtle border for results */
+            border-radius: 10px;
+            display: none;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.5s forwards;
+        }
+
+        .result-container h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            /* Primary color for result heading */
+            margin-bottom: 15px;
+        }
+
+        .result-container p {
+            font-size: 1rem;
+            color: var(--text-light);
+            /* Light text for result paragraphs */
+            margin-bottom: 10px;
+        }
+
+        .music-link {
+            color: #ffeb3b;
+            /* A contrasting bright yellow for music links */
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .music-link:hover {
+            color: #ffc107;
+            /* Slightly darker yellow on hover */
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .image-container img {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            select {
+                width: 90%;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Welcome to my Page! Motivate yourself each day with a smile!</h1>
+            <p><b><em>Even the dark room has a light where it comes from a presence of a human or a living
+                        thing!</em></b>
+            </p>
+            <div class="image-container">
+                <img src="https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg"
+                    alt="Lush green forest path">
+            </div>
+            <p><i>Tell me how is your mood today!</i></p>
+            <label for="mood">Choose your mood:</label>
+            <select name="mood" id="mood">
+                <option value="love">Love</option>
+                <option value="sad">Sad</option>
+                <option value="angry">Angry</option>
+                <option value="Party">Party</option>
+                <option value="nervous">Nervous</option>
+            </select>
+            <button id="submit-button">Submit</button>
+        </div>
+
+        <div class="result-container" id="result-container">
+            <h2 id="mood-title"></h2>
+            <p id="quote-display"></p>
+            <p id="music-display"></p>
+            <button id="refresh-button">Refresh</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const submitButton = document.getElementById("submit-button");
+            const refreshButton = document.getElementById("refresh-button");
+            const moodSelect = document.getElementById("mood");
+            const resultContainer = document.getElementById("result-container");
+            const moodTitle = document.getElementById("mood-title");
+            const quoteDisplay = document.getElementById("quote-display");
+            const musicDisplay = document.getElementById("music-display");
+            let currentMood = "";
+
+            const moodData = {
+                love: {
+                    quotes: [
+                        "Love is the only force capable of transforming an enemy into a friend.",
+                        "Be the reason someone smiles today.",
+                        "In English they said: You're beautiful.",
+                        "They said : I love you. , but in poetry they said : If someday the moon calls you by your name. don't be surprised. , because every night i tell her about you.",
+                        "In an endless garden of flowers i will always piet you."
+                    ],
+                    music: [
+                        { name: "Pedhavi chivarake from Petta (Telugu)", url: "https://youtu.be/B6tXx2fZKB4" },
+                        { name: "Ninu chuse anadamlo from Gang-leader (telugu)", url: "https://youtu.be/QlFwVjhllzQ" },
+                        { name: "Adhento Gaani Vunnapaatuga from Jersey (telugu)", url: "https://youtu.be/l2GJB-kvnww" },
+                        { name: "Gaali valuga from agnathavaasi (telugu)", url: "https://youtu.be/yUNMH9KaTjA" },
+                        { name: "Hrudayama from Major (telugu)", url: "https://youtu.be/4OuYQX9dfJA" },
+                        { name: "Arerey Manasa from Falak nama das (telugu)", url: "https://youtu.be/Xc4veW5wF48" },
+                        { name: "Kadalalle from Dear comarade (telugu)", url: "https://youtu.be/2ySr4lR0XFg" },
+                        { name: "sundari neeve from Dhalapathi (telugu)", url: "https://youtu.be/JrrX-_johZ4" },
+                        { name: "Inthalo enni vinthalo from Karthikeya (telugu)", url: "https://youtu.be/KZy8um0iY9s" },
+                        { name: "Vaalu kanula dhaana from Premikula roju (telugu)", url: "https://youtu.be/mMvKmscp1k4" },
+                        { name: "Zaalima from Raees (Hindi)", url: "https://youtu.be/lpdRqn6xwiM" },
+                        { name: "Tuhje meh rab dikta from Rab ne banadi jodi (Hindi)", url: "https://youtu.be/qoq8B8ThgEM" },
+                        { name: "Sajini re from Laapataa ladies (Hindi)", url: "https://youtu.be/k3g_WjLCsXM" },
+                        { name: "Titli from Chennai express (Hindi)", url: "https://youtu.be/V8zXLMIjlcw" },
+                        { name: "Pehla Nasha from Jo Jeeta Wohi Sikandar (Hindi)", url: "https://youtu.be/SBfPs-PMGTA" },
+                        { name: "Tum Se Hi from Jab We Met (Hindi)", url: "https://youtu.be/mt9xg0mmt28" },
+                        { name: "Agar Tum Saath Ho from Tamasha (Hindi)", url: "https://youtu.be/sK7riqg2mr4" },
+                        { name: "Hawayein from Jab Harry Met Sejal (Hindi)", url: "https://youtu.be/cs1e0fRyI18" },
+                        { name: "Raabta from Agent Vinod (Hindi)", url: "https://youtu.be/zlt38OOqwDc" },
+                        { name: "Tum Mile from Tum Mile (Hindi)", url: "https://youtu.be/9gMAlRHWfhw" },
+                        { name: "Perfect from Ed Sheeran (English)", url: "https://youtu.be/2Vv-BfVoq4g" },
+                        { name: "All of Me from John Legend (English)", url: "https://youtu.be/450p7goxZqg" },
+                        { name: "Thinking Out Loud from Ed Sheeran (English)", url: "https://youtu.be/lp-EO5I60KA" },
+                        { name: "Just the Way You Are from Bruno Mars (English)", url: "https://youtu.be/LjhCEhWiKXk" },
+                        { name: "A Thousand Years from Christina Perri (English)", url: "https://youtu.be/rtOvBOTyX00" },
+                        { name: "I Will Always Love You from Whitney Houston (English)", url: "https://youtu.be/3JWTaaS7LdU" },
+                        { name: "Make You Feel My Love from Adele (English)", url: "https://youtu.be/0put0_a--Ng" },
+                        { name: "You Are the Reason from Calum Scott (English)", url: "https://youtu.be/ShZ978fBl6Y" },
+                        { name: "Marry Me from Train (English)", url: "https://youtu.be/4uG1NMKNWCU" },
+                        { name: "Can't Help Falling in Love from Elvis Presley (English)", url: "https://youtu.be/vGJTaP6anOU" },
+                        { name: "This is what winter feels like (English)", url: "https://youtu.be/beSO_-Xn3vs" }
+                    ],
+                },
+                sad: {
+                    quotes: [
+                        "Stars can’t shine without darkness.",
+                        "Tears come from the heart and not from the brain.",
+                        "You fall in love with a pair of eyes, then you become blind to all eyes",
+                        "Even if you never love me , i'll still love you in silence.",
+                        "Some people are going to leave, but that's not the end of your story. That's the end of their part in your story."
+                    ],
+                    music: [
+                        { name: "Asha pasham from Care of kancharapalem (Telugu)", url: "https://youtu.be/0vX4bY1j9mA" },
+                        { name: "Em Sandeham Ledu from Oohalu Gusagusalade (Telugu)", url: "https://youtu.be/kG1jb6zRn10" },
+                        { name: "Emai poyave from Padi Padi leche manasu (Telugu)", url: "https://youtu.be/Eyx0Hvi1_Ng" },
+                        { name: "Nijama kalaa from Lucky bhaskar (Telugu)", url: "https://youtu.be/6IM0mrxu0fk" },
+                        { name: "Nuvvunte na jathaga from I (telugu)", url: "https://youtu.be/Zc7SeDL-0uE" },
+                        { name: "jabili kosam from Manchi manashulu (Telugu)", url: "https://youtu.be/1eXKX1b0Yk3JH8m0" },
+                        { name: "Oohalu from Arjun reddy (Telugu)", url: "https://youtu.be/XxRHL49zDYA" },
+                        { name: "Luckanna mate nillu from Raghuvaran Btech (Telugu)", url: "https://youtu.be/Mm1Zp80gj1Q" },
+                        { name: "uppenantha from Arya-2 (telugu)", url: "https://youtu.be/TIOZUdc0aL8" },
+                        { name: "Nee prashnalu from Kotha bangaru lokam (Telugu)", url: "https://youtu.be/9RbQwW1B9AI" },
+                        { name: "Channa Mereya from Ae Dil Hai Mushkil (Hindi)", url: "https://youtu.be/284Ov7ysmfA" },
+                        { name: "Humnava mere from Jubin nautiyal (hindi)", url: "https://youtu.be/TmRgK-pXH9c" },
+                        { name: "kaun tujhe from Ms-Dhoni untold story (hindi)", url: "https://youtu.be/atVof3pjT-I" },
+                        { name: "Bekhayali from Arjun reddy (Hindi)", url: "https://youtu.be/VOLKJJvfAbg" },
+                        { name: "Tujhe kitna chahne lage from Kabir Singh (Hindi)", url: "https://youtu.be/AgX2II9si7w" },
+                        { name: "Phir le aya dil from Barfi (Hindi)", url: "https://youtu.be/k6BnSIs3XUQ" },
+                        { name: "Sahiba - singer : (aditya Rikhari) (Hindi)", url: "https://youtu.be/n2dVFdqMYGA" },
+                        { name: "Maula mere Maula mere from anwar (hindi)", url: "https://youtu.be/1IDMbCkQZQs" },
+                        { name: "shayad from Love aaj kal (hindi)", url: "https://youtu.be/MJyKN-8UncM" },
+                        { name: "Tum hi ho from Aashiqui 2 (Hindi)", url: "https://youtu.be/IJq0yyWug1k" },
+                        { name: "We dont talk anymore - singer : (charlie puth) (English)", url: "https://youtu.be/3AtDnEC4zak" },
+                        { name: "Love-story - singer : (Taylor swift) (English)", url: "https://youtu.be/sL8-vrfTR7k" },
+                        { name: "Golden Brown - singer : (the Stranglers) (English)", url: "https://youtu.be/AWAsI3U2EaE" },
+                        { name: "Somebody you loved - singer : (Lewis Capaldi) (English)", url: "https://youtu.be/zABLecsR5UE" }
+                    ],
+                },
+                angry: {
+                    quotes: [
+                        "For every minute you remain angry, you give up sixty seconds of peace of mind.",
+                        "Even at your ego level, you are still a human being. Don't forget that.",
+                        "Anger is one letter short of danger.",
+                        "Speak when you are angry and you will make the best speech you will ever regret.",
+                        "Anger is a wind which blows out the lamp of the mind."
+                    ],
+                    music: [
+                        { name: "O sainika from Na peru surya na illu india (Telugu)", url: "https://youtu.be/eHp3zQAAZso" },
+                        { name: "Nenu Saitham from Businessman (Telugu)", url: "https://youtu.be/6gxD5vZ7gDI" },
+                        { name: "Pilla Zamindar title song from Pilla Zamindar (Telugu)", url: "https://youtu.be/LAXaMtgdsAI" },
+                        { name: "Bhaag DK Bose from Delhi Belly (Hindi)", url: "https://youtu.be/vs1IDdap3X4" },
+                        { name: "Sadda Haq from Rockstar (Hindi)", url: "https://youtu.be/p9DQINKZxWE" },
+                        { name: "Malang (Title Track) from Malang (Hindi)", url: "https://youtu.be/KBIq11mNB0I" },
+                        { name: "Zinda – Bhaag Milkha Bhaag (Hindi)", url: "https://youtu.be/Ax0G_P2dSBw" },
+                        { name: "Azaadi from Gully Boy (Hindi)", url: "https://youtu.be/4nCshJBODT4" },
+                        { name: "In The End - singer : Linkin Park (English)", url: "https://youtu.be/eVTXPUF4Oz4" },
+                        { name: "Numb - singer : Linkin Park (English)", url: "https://youtu.be/kXYiU_JCYtU" },
+                        { name: "Believer - singer : Imagine dragons (English)", url: "https://youtu.be/7wtfhZwyrcc" },
+                        { name: "Radioactive - singer : Imagine dragons (English)", url: "https://youtu.be/ktvTqknDobU" },
+                        { name: "Killing In The Name - singer : Rage Against The Machine (English)", url: "https://youtu.be/bWXazVhlyxQ" }
+                    ],
+                },
+                Party: {
+                    quotes: [
+                        "When you are excited about something, you feel more alive.",
+                        "the man who enjoy his work is never old.",
+                        "the only way to do great work is to love what you do.",
+                        "when you think you are enjoying your work, you are doing great work.",
+                        "the more you enjoy your work, the more you will be successful."
+                    ],
+                    music: [
+                        { name: "Kurchi madtapetti from Guntur kaaram (Telugu)", url: "https://youtu.be/gh3FyLT7WVg" },
+                        { name: "Ringa Ringa from Arya (Telugu)", url: "https://youtu.be/2OhhFkF3MqQ" },
+                        { name: "A BC centerlu from Winner (Telugu)", url: "https://youtu.be/OxVPDD6PXd8" },
+                        { name: "Kunfu ku mari from Bruclee (Telugu)", url: "https://youtu.be/u_wB6byrl5k" },
+                        { name: "Oo Antava from Pushpa raj (Telugu)", url: "https://youtu.be/GtanRpjxAl4" },
+                        { name: "Mass maranam from Petta (Telugu)", url: "https://youtu.be/xDkNIWgGb3g" },
+                        { name: "Bommali from Billa (Telugu)", url: "https://youtu.be/yDSnoBS1Xd4" },
+                        { name: "Monica from Coolie (Telugu)", url: "https://youtu.be/owTs8Ha6Nao" },
+                        { name: "Bad boy from Saaho (Telugu)", url: "https://youtu.be/dXO5p6QRG7A" },
+                        { name: "Manohari from Bahubali part-1 (Telugu)", url: "https://youtu.be/dXO5p6QRG7A" },
+                        { name: "nashe chadgaye from Befhikar (Hindi)", url: "https://youtu.be/HoCwa6gnmM0" },
+                        { name: "Galti se mistake from Jagga Jasoos (Hindi)", url: "https://youtu.be/05TA9jNnCdU" },
+                        { name: "Badtameez Dil from Yeh Jawaani Hai Deewani (Hindi)", url: "https://youtu.be/II2EO3Nw4m0" },
+                        { name: "Me tera boy friend from Raabta (Hindi)", url: "https://youtu.be/FQS7i2z1CoA" },
+                        { name: "uyi Amma from Azaad (Hindi)", url: "https://youtu.be/FZLadzn5i6Q" },
+                        { name: "Tauba Tauba from Bad newz (Hindi)", url: "https://youtu.be/LK7-_dgAVQE" },
+                        { name: "saaphrie - singer : Ed sheeren (English)", url: "https://youtu.be/JgDNFQ2RaLQ" },
+                        { name: "Lose my mind from F1 (English)", url: "https://youtu.be/WWEs82u37Mw" },
+                        { name: "cheap thrills - singer : Sia (English)", url: "https://youtu.be/nYh-n7EOtMA" },
+                        { name: "Attention - singer : Charlie puth (English)", url: "https://youtu.be/nfs8NYg7yQM" },
+                        { name: "Closer - singer : Chainsmokers (English)", url: "https://youtu.be/PT2_F-1esPk" },
+                        { name: "Blinding lights - singer : The Weekend (English)", url: "https://youtu.be/4NRXx6U8ABQ" },
+                        { name: "Popular - singer : The weekened (English)", url: "https://youtu.be/vt0i6nuqNEo" },
+                        { name: "Levitating - singer : Dua lipa (English)", url: "https://youtu.be/TUVcZfQe-Kw" },
+                        { name: "Don't start now - singer : Dua lipa (English)", url: "https://youtu.be/oygrmJFKYZY" },
+                        { name: "Icecream Women - singer : White panda (English)", url: "https://youtu.be/xJf1gajVEnc" }
+                    ],
+                },
+                nervous: {
+                    quotes: ["Don’t let your fears decide your future.",
+                        "Be yourself that is the best thing you can be.",
+                        "You are capable of amazing things.",
+                        "Believe you can and you're halfway there.",
+                        "Being nervous is a sign that you care."
+                    ],
+                    music: [
+                        { name: "Eppudu from Oopiri (Telugu)", url: "https://youtu.be/_LipYoU__bc" },
+                        { name: "Needapadadhani from Jersey (Telugu)", url: "https://youtu.be/wJVq_6DkavM" },
+                        { name: "Vellipomakey from sahasam swasaga saagipo (Telugu)", url: "https://youtu.be/-GydnFPTgus" },
+                        { name: "Adiga from Ninnu Kori (Telugu)", url: "https://youtu.be/evbYFsSJ4pU" },
+                        { name: "Nuvvani idhi nedhani from Maharshi (Telugu)", url: "https://youtu.be/4dbiE-da82E" },
+                        { name: "Jaago from Srimanthudu (Telugu)", url: "https://youtu.be/ngei1VHHUUM" },
+                        { name: "Ilahi from Yeh Jawaani Hai Deewani (Hindi)", url: "https://youtu.be/fdubeMFwuGs" },
+                        { name: "Galiyaan from Ek-villan (Hindi)", url: "https://youtu.be/FxAG_11PzCk" },
+                        { name: "Tere bina from guru (Hindi)", url: "https://youtu.be/_mwqXnTEHSc" },
+                        { name: "kabira from Yeh Jawaani Hai Deewani (Hindi)", url: "https://youtu.be/jHNNMj5bNQw" },
+                        { name: "Tu Jaane Na from Ajab Prem Ki Ghazab Kahani (Hindi)", url: "https://youtu.be/EHCG8kno2Lg" },
+                        { name: "sun raha ne na from Ashiqui-2 (Hindi)", url: "https://youtu.be/z3UHfi9vpbc" },
+                        { name: "Daylight - singer : David kushner (English)", url: "https://youtu.be/MoN9ql6Yymw" },
+                        { name: "Let her go - singer : Passenger (English)", url: "https://youtu.be/RBumgq5yVrA" },
+                        { name: "Count on me - singer : Bruno mars (English)", url: "https://youtu.be/6k8cpUkKK4c" },
+                        { name: "Belong together - singer : Mark ambor (English)", url: "https://youtu.be/xPWnNFF-TAw" },
+                        { name: "I'm yours - singer : Jason mraz (English)", url: "https://youtu.be/nxfHXrzddMY" },
+                        { name: "Teenage dreams - singer : Stephen Dawes (English)", url: "https://youtu.be/pVi9W3OThVw" },
+                        { name: "Riptide - singer : Vance joy (English)", url: "https://youtu.be/uJ_1HMAGb4k" },
+                        { name: "Ho hey - singer : Lumineers (English)", url: "https://youtu.be/zvCBSSwgtg4" },
+                        { name: "Sailors - singer : Gigi periz (English)", url: "https://youtu.be/KZGWfHdfWQs" }
+                    ],
+                }
+            };
+
+            function displayContent() {
+                if (currentMood && moodData[currentMood]) {
+                    const moodInfo = moodData[currentMood];
+                    const moodName = currentMood.charAt(0).toUpperCase() + currentMood.slice(1);
+                    moodTitle.textContent = `Your Mood: ${moodName}`;
+
+                    const randomQuote = moodInfo.quotes[Math.floor(Math.random() * moodInfo.quotes.length)];
+                    quoteDisplay.textContent = `Quote: ${randomQuote}`;
+
+                    const randomMusic = moodInfo.music[Math.floor(Math.random() * moodInfo.music.length)];
+
+                    const musicLink = document.createElement("a");
+                    musicLink.href = randomMusic.url;
+                    musicLink.textContent = randomMusic.name;
+                    musicLink.target = "_blank";
+                    musicLink.classList.add("music-link");
+
+                    musicDisplay.textContent = "Music: ";
+                    musicDisplay.appendChild(musicLink);
+
+                    resultContainer.style.display = 'block';
+                }
+            }
+
+            submitButton.addEventListener("click", function () {
+                currentMood = moodSelect.value;
+                displayContent();
+            });
+
+            refreshButton.addEventListener("click", function () {
+                displayContent();
+            });
+        });
+    </script>
+</body>
+
+</html>
